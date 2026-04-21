@@ -1,25 +1,40 @@
 #pragma once
-#include "Globals.h"
+#include "SFMl/Graphics.hpp"
 
-class Input
-{
+// Singleton for Input
+// #####
+class Input {
 private:
-	bool keyPressed;
-	Keyboard::Key key;
+    // Variable
+    // Keyboard
+    bool keyPressed;
+    sf::Keyboard::Key key;
 
-	bool mousePressed;
-	Mouse::Button mouse;
-	Vector2i mousePos;
+    // Mouse
+    bool mousePressed;
+    sf::Mouse::Button mouse;
+    sf::Vector2i mousePos;
+
+    // Constructor private for singleton
+    Input();
+
+    // My instance
+    static Input* instance;
 
 public:
-	Input();
-	~Input() = default;
+    // Destructor
+    ~Input() = default;
 
-	void setEvent(const Event event);
-	void reset();
+    // Function for the main loop
+    void setEvent(sf::Event event);
+    void reset();
 
-	bool isKeyPressed(Keyboard::Key key);
-	bool isMousePressed(Mouse::Button button);
-	Vector2i getMousePos();
+    // Check input
+    bool isKeyPressed(sf::Keyboard::Key key);
+    bool isMousePressed(sf::Mouse::Button button);
+    sf::Vector2i getMousePos();
+
+    // Get input
+    static Input* getInstance();
 };
-
+// #####

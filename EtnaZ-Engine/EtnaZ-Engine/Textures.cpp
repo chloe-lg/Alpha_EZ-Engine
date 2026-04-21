@@ -4,26 +4,18 @@ Textures* Textures::TextureManager = nullptr;
 
 Textures::Textures() {
     loadAllTexture();
-    loadAllFont();
 }
 
-Textures* Textures::getMyTextures() {
+Textures* Textures::getTexturesManager() {
     if (TextureManager == nullptr) {
         TextureManager = new Textures();
     }
     return TextureManager;
 }
 
-void Textures::loadAllTexture() {
-
-}
-
-void Textures::loadAllFont() {
-
-}
-
 void Textures::loadTexture(texturesIndices _index, const char* fileName) {
-    sf::Texture texture(fileName);
+    sf::Texture texture = sf::Texture();
+    auto toto = texture.loadFromFile(fileName);
 
     auto index = (int)_index;
     if (index >= tabTextures.size())
@@ -52,4 +44,14 @@ sf::Texture& Textures::getTexture(texturesIndices index) {
 
 sf::Font& Textures::getFont(fontsIndices index) {
     return tabFonts[(int)index];
+}
+
+void Textures::loadAllTexture()
+{
+
+    loadTexture(Textures::texturesIndices::sushi_s, "assets/sushi_s.png");
+    loadTexture(Textures::texturesIndices::knife, "assets/knife.png");
+    loadTexture(Textures::texturesIndices::plate_w, "assets/plate_w.png");
+
+
 }

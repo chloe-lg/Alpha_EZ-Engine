@@ -1,31 +1,38 @@
 #pragma once
-#include <iostream>
-
-#include "Globals.h"
-#include "Input.h"
-
+#include <SFML/Graphics.hpp>
 #include "GameState.h"
-#include "MainMenu.h"
+#include "Input.h"
+#include "Menu.h"
+#include "Textures.h"
 
-using namespace std;
+class GameEngine {
+public:
+    // Static variable
+    static sf::RenderWindow* window;
+    // Vector for states in pause
+    static std::vector<GameState*> states;
+    // Vector for current states
+    static std::vector<GameState*> activeStates;
 
-class GameEngine
-{
 private:
-	RenderWindow* window;
-	float dt;
-	vector<GameState*>* states;
-	Clock clock;
-	Input input;
+    // Variable
+    sf::Clock clock;
+    float dt;
 
 public:
-	GameEngine();
-	~GameEngine();
 
-	void updateEvent();
-	void updateDt();
-	void update();
-	void render();
-	void run();
+    // Constructor/Destructor
+    GameEngine();
+    ~GameEngine();
+
+    // Update
+    void updateEvent();
+    void updateTime();
+    void update();
+
+    //render
+    void render();
+
+    // main loop
+    void run();
 };
-

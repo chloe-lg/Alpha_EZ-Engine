@@ -1,60 +1,119 @@
 #include "Game.h"
-#include "MainMenu.h"
+#include "Textures.h"
 
-Game::Game(RenderWindow* window, vector<GameState*>* _states, Input& _input) : GameState(window, _states, _input), gOBuild(false) {
-	camera = new Camera(0.005);
+#include <SFML/Window/Keyboard.hpp>
+
+#include "GameEngine.h"
+
+Game* Game::instance = nullptr;
+
+Game::Game() {
+    myPlayer = new Player(0, 0, 80, 80);
+    myKnife = new Knife(50, 50, 300, 54);
+    myPlate = new Plate(100, 100, 180, 180);
+
+    GameObject* myGameObjectC = new GameObject(1000, 500, 100, 100);
+    GameObject* myGameObject = new GameObject(500, 500, 100, 100);
+    GameObject* green = new GameObject(500, 500, 50, 50);
+
+    myGameObject->setColor(sf::Color::White);
+    green->setColor(sf::Color::Green);
+    myGameObjectC->setColor(sf::Color::Blue);
+
+    myPlayer->setTexture((&Textures :: getTexturesManager()->getTexture(Textures:: texturesIndices:: sushi_s)));
+    myKnife->setTexture((&Textures::getTexturesManager()->getTexture(Textures::texturesIndices::knife)));
+    myPlate->setTexture((&Textures::getTexturesManager()->getTexture(Textures::texturesIndices::plate_w)));
+
+
+    Collider* myCollider = new Collider(myPlayer);
+    myPlayer->setCollider(myCollider);
+
+    entityCreate.push_back(myGameObjectC);
+    entityCreate.push_back(myPlayer);
+    entityCreate.push_back(myKnife);
+    entityCreate.push_back(myPlate);
+
+    setLayer(3);
+    addObjetcInLayer(myGameObjectC, 1);
+    addObjetcInLayer(myPlayer, 2);
+    addObjetcInLayer(myKnife, 1);
+    addObjetcInLayer(myPlate, 1);
+
+    setCollision();
 }
 
-void Game::Instance(RenderWindow* window, vector<GameState*>*& states, Input& input) {
-	GameState* mainMenu = new Game(window, states, input);
-	states->push_back(mainMenu);
+Game::~Game() {
+    entityCreate.clear();
+    entityNoCollidable.clear();
+    entityCollidable.clear();
+    instance = nullptr;
+}
+
+GameState* Game::getInstance() {
+    if (instance == nullptr) {
+        instance = new Game();
+    }
+    return instance;
 }
 
 void Game::manageState() {
-	if (input.isKeyPressed(Keyboard::Key::Escape)) {
-		GameState::nextState(states);
-		MainMenu::Instance(window, states, input);
-	}
-}
-
-
-void Game::setEntity() {
-	if (!gOBuild) {
-
-		// Background white
-		GameObject* backWhite = new GameObject(0, 0, win_width, win_height);
-		backWhite->setColor(Color::White);
-		gameObject.push_back(backWhite);
-
-		//Bloc
-		GameObject* testBloc = new GameObject(100, 100, 100, 100);
-		gameObject.push_back(testBloc);
-
-		// Player
-		Player* testPlayer = new Player(100, 100, 100, 100);
-		testPlayer->setColor({0,255,0,255});
-		gameObject.push_back(testPlayer);
-
-		gOBuild = true;
-	}
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape)) {
+        nextState();
+        GameEngine::activeStates.push_back(Menu::getInstance());
+    }
 }
 
 void Game::update(float& dt) {
-	setEntity();
-
-	camera->updateCamera(gameObject.back());
-
-	for (auto gO : gameObject) {
-		gO->update(dt,input);
-	}
-
+    collisions();
+    for (auto& e : entityNoCollidable) {
+        e->update(dt);
+    }
+    for (auto& e : entityCollidable) {
+        e->update(dt);
+    }
 }
 
 void Game::render() {
+    for (auto& vR : vecRender) {
+        for (auto& e : vR) {
+            e->render();
+        }
+    }
+}
 
-	camera->setCamera(window);
+void Game::collisions() {
+    if (myPlayer->getCollider() != nullptr) {
+        for (auto& eC : entityCollidable) {
+            if (eC != myPlayer && myPlayer->getCollider()->isColliding(eC)){
+                myPlayer->getCollider()->resolveCollision(eC);
+            }
+            
+        }
+    }
+}
 
-	for (auto gO : gameObject) {
-		gO->render(window);
-	}
+void Game::setCollision() {
+    if (!entityCreate.empty()) {
+        for (auto& e : entityCreate) {
+            if (e->getCollider() != nullptr && e->getCollider()->isCollidable()) {
+                entityCollidable.push_back(e);
+            }
+            else {
+                entityNoCollidable.push_back(e);
+            }
+        }
+    }
+}
+
+void Game::addObjetcInLayer(GameObject* myObject, int Layer) {
+    if (!vecRender.empty() && Layer < vecRender.size()) {
+        vecRender[Layer].push_back(myObject);
+    }
+}
+
+void Game::setLayer(int _nbrLayer) {
+    for (int X = 0; X < _nbrLayer; X++) {
+        std::vector<GameObject*>  layer;
+        vecRender.push_back(layer);
+    }
 }

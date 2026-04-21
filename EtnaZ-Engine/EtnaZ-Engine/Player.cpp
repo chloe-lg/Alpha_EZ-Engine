@@ -1,45 +1,46 @@
 #include "Player.h"
 
+Player::Player() : Player(0, 0, 50, 50) {
+
+}
+
 Player::Player(float x, float y) : Player(x, y, 50, 50) {
 
 }
 
-Player::Player(float x, float y, float w, float h) : GameObject(x, y, w, h), speed(400.0f) {
-
+Player::Player(float x, float y, float w, float h) : GameObject(x, y, w, h) {
+    speed = 400.0f;
 }
 
+float Player::getSpeed() {
+    return speed;
+}
 
 void Player::setSpeed(float nSpeed) {
-	speed = nSpeed;
+    speed = nSpeed;
 }
 
-void Player::controlKeayboard(float& dt, Input& input) {
-    if (Keyboard::isKeyPressed(Keyboard::Key::Z)) {
+void Player::controllKeyboard(float& dt) {
+    GameObject::update(dt);
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Z)) {
         pos.y -= speed * dt;
     }
-    if (Keyboard::isKeyPressed(Keyboard::Key::Q)) {
-        pos.x -= speed * dt;
-    }
-    if (Keyboard::isKeyPressed(Keyboard::Key::S)) {
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S)) {
         pos.y += speed * dt;
     }
-    if (Keyboard::isKeyPressed(Keyboard::Key::D)) {
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Q)) {
+        pos.x -= speed * dt;
+    }
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D)) {
         pos.x += speed * dt;
     }
-}
-
-void Player::clampInScreen() {
-    pos.x = std::max(0.f, std::min(pos.x, (float)(level_size_width - size.x)));
-    pos.y = std::max(0.f, std::min(pos.y, (float)(level_size_heigt - size.y)));
     setPos(pos);
 }
 
-void Player::update(float& dt, Input& input) {
-	controlKeayboard(dt, input);
-    clampInScreen();
-	setPos(pos);
+void Player::update(float& dt) {
+    controllKeyboard(dt);
 }
 
-void Player::render(RenderWindow* window) {
-	GameObject::render(window);
+void Player::render() {
+    GameObject::render();
 }

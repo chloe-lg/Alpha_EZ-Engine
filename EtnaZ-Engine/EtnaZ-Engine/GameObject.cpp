@@ -1,74 +1,103 @@
 #include "GameObject.h"
 
-GameObject::GameObject(float x, float y) : GameObject(x,y,50,50) {
+#include "GameEngine.h"
+
+
+// Constructor
+// ####
+GameObject::GameObject(float x, float y) : GameObject(x, y, 50, 50) {
 
 }
 
-GameObject::GameObject(float x, float y, float w, float h) : pos({ x,y }), size({ w,h }), visibility(true), tex(nullptr), color({255,0,0,255}), scale({1,1}) {
-	rect.setFillColor(color);
-	rect.setPosition(pos);
-	rect.setSize(size);
-	rect.setScale(scale);
+GameObject::GameObject(float x, float y, float w, float h) : pos({ x,y }), size({ w,h }), visibility(true), tex(nullptr), scale({ 1,1 }) {
+    color = sf::Color::White;
+    rect.setFillColor(color);
+    rect.setPosition(pos);
+    rect.setSize(size);
+    rect.setScale(scale);
+
+    collider = nullptr;
+}
+// #####
+
+
+// Get variable
+// #####
+sf::Texture* GameObject::getTexture() {
+    return tex;
 }
 
-GameObject::~GameObject() {
-	delete tex;
-	tex = nullptr;
+sf::Vector2f& GameObject::getPos() {
+    return pos;
 }
 
-
-Texture* GameObject::getTexture() {
-	return tex;
+sf::Vector2f& GameObject::getSize() {
+    return size;
 }
 
-Vector2f GameObject::getPos() {
-	return pos;
+Collider* GameObject::getCollider() {
+    return collider;
 }
 
-Vector2f GameObject::getSize() {
-	return size;
+void GameObject::setCollider(Collider* _collider) {
+    collider = _collider;
 }
 
+// #####
 
-void GameObject::setTexture(Texture* nTex) {
-	tex = nTex;
+
+// Set variable
+// #####
+void GameObject::setTexture(sf::Texture* nTex) {
+    tex = nTex;
 }
 
-void GameObject::setColor(Color nColor) {
-	rect.setFillColor(nColor);
+void GameObject::setColor(sf::Color nColor) {
+    rect.setFillColor(nColor);
 }
 
-void GameObject::setPos(Vector2f nPos) {
-	rect.setPosition(nPos);
+void GameObject::setPos(sf::Vector2f nPos) {
+    pos = nPos;
+    rect.setPosition(nPos);
 }
 
-void GameObject::setSize(Vector2f nSize) {
-	rect.setSize(nSize);
+void GameObject::setSize(sf::Vector2f nSize) {
+    size = nSize;
+    rect.setSize(nSize);
 }
 
-void GameObject::setScale(Vector2f nScale) {
-	rect.setScale(nScale);
+void GameObject::setScale(sf::Vector2f nScale) {
+    scale = nScale;
+    rect.setScale(nScale);
 }
+// #####
 
 
+// Set visibility
+// #####
 void GameObject::setVisibilityTrue() {
-	visibility = true;
+    visibility = true;
 }
 
 void GameObject::setVisibilityFalse() {
-	visibility = false;
+    visibility = false;
 }
 
+// #####
 
-void GameObject::update(float& dt, Input& input) {
+
+// Virtual method
+// #####
+void GameObject::update(float& dt) {
 
 }
 
-void GameObject::render(RenderWindow* window) {
-	if (visibility) {
-		if (tex) {
-			rect.setTexture(tex);
-		}
-		window->draw(rect);
-	}
+void GameObject::render() {
+    if (visibility) {
+        if (tex) {
+            rect.setTexture(tex);
+        }
+        GameEngine::window->draw(rect);
+    }
 }
+// #####

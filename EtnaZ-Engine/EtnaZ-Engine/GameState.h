@@ -1,29 +1,30 @@
 #pragma once
-#include <vector>
-#include <iostream>
 
-#include "Globals.h"
-#include "Input.h"
+// Forward declaration
+// #####
+class GameEngine;
+// #####
 
-using namespace std;
 
-class GameState
-{
+// Class for make a scene
+// #####
+class GameState {
 protected:
-	RenderWindow* window;
-	vector<Texture*> textures;
-	vector<GameState*>* states;
-	Input& input;
+    // Constructor
+    GameState() = default;
 
 public:
-	GameState() = default;
-	GameState(RenderWindow* window, vector<GameState*>* states, Input& input);
-	virtual ~GameState() = default;
+    // Destructor
+    virtual ~GameState() = default;
 
-	void nextState(vector<GameState*>* states);
+    // Method for act on scene
+    void nextState();
+    void pause();
+    void resume();
 
-	virtual void manageState() = 0;
-	virtual void update(float& dt) = 0;
-	virtual void render() = 0;
+    // Method for heritage
+    virtual void manageState() = 0;
+    virtual void update(float& dt) = 0;
+    virtual void render() = 0;
 };
-
+// #####

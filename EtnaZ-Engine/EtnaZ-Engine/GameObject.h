@@ -1,44 +1,51 @@
 #pragma once
-#include "Globals.h"
-#include "Input.h"
+#include "SFML/Graphics.hpp"
+#include "Collider.h"
 
 // Class for create an object
-class GameObject
-{
+class GameObject {
+protected:
+    // Variable
+    sf::Texture* tex;
+    sf::Color color;
+
+    sf::Vector2f pos;
+    sf::Vector2f size;
+    sf::Vector2f scale;
+
+    sf::RectangleShape rect;
+    bool visibility;
+
+    // Object for manage collision
+    Collider* collider;
+
 public:
-	// Variable
-	Texture* tex;
-    Color color;
+    // Constructor/Destructor
+    GameObject() = default;
+    GameObject(float x, float y);
+    GameObject(float x, float y, float w, float h);
+    virtual ~GameObject() = default;
 
-	Vector2f pos;
-	Vector2f size;
-	Vector2f scale;
+    // Method get/set
+    sf::Texture* getTexture();
+    sf::Vector2f& getPos();
+    sf::Vector2f& getSize();
+    Collider* getCollider();
 
-	RectangleShape rect;
-	bool visibility;
+    void setCollider(Collider* collider);
 
-public:
-	// Constructor/Destructor
-	GameObject() = default;
-	GameObject(float x, float y);
-	GameObject(float x, float y, float w, float h);
-	virtual ~GameObject();
+    void setTexture(sf::Texture* tex);
+    void setColor(sf::Color nColor);
 
-	// Method get/set
-	Texture* getTexture();
-	Vector2f getPos();
-	Vector2f getSize();
+    void setPos(sf::Vector2f nPos);
+    void setSize(sf::Vector2f nSize);
+    void setScale(sf::Vector2f scale);
 
-	void setTexture(Texture* tex);
-	void setColor(Color nColor);
-	void setPos(Vector2f nPos);
-	void setSize(Vector2f nSize);
-	void setScale(Vector2f scale);
+    // Visibility
+    void setVisibilityTrue();
+    void setVisibilityFalse();
 
-	void setVisibilityTrue();
-	void setVisibilityFalse();
-
-	// Method virtual
-	virtual void update(float& dt, Input& input);
-	virtual void render(RenderWindow* window);
+    // Method virtual
+    virtual void update(float& dt);
+    virtual void render();
 };

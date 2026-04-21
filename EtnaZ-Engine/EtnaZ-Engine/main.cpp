@@ -1,7 +1,7 @@
 #include "GameEngine.h"
 
 int main() {
-	GameEngine game;
-	game.run();
-	return 0;
+    GameEngine myGame;
+    myGame.run();
+    return 0;
 }

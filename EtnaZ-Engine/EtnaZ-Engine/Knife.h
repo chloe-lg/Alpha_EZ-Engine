@@ -1,20 +1,19 @@
 #pragma once
 #include "GameObject.h"
 
-class Player : public GameObject {
+class Knife : public GameObject {
 private:
     float speed;
 public:
-    Player();
-    Player(float x, float y);
-    Player(float x, float y, float w, float h);
-    virtual ~Player() override = default;
+    Knife();
+    Knife(float x, float y);
+    Knife(float x, float y, float w, float h);
+    virtual ~Knife() override = default;
 
     float getSpeed();
 
     void setSpeed(float nSpeed);
 
-    void controllKeyboard(float& dt);
 
     virtual void update(float& dt) override;
     virtual void render() override;
