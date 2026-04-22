@@ -2,6 +2,10 @@
 #include "SFML/Graphics.hpp"
 #include "Collider.h"
 
+
+class Game;
+class Player;
+
 // Class for create an object
 class GameObject {
 protected:
@@ -24,7 +28,9 @@ public:
     GameObject() = default;
     GameObject(float x, float y);
     GameObject(float x, float y, float w, float h);
-    virtual ~GameObject() = default;
+    virtual ~GameObject();
+
+    virtual void onPlayerCollide(Game* game, Player* player) {}
 
     // Method get/set
     sf::Texture* getTexture();

@@ -20,6 +20,11 @@ GameObject::GameObject(float x, float y, float w, float h) : pos({ x,y }), size(
 }
 // #####
 
+GameObject::~GameObject() {
+    delete collider;
+    collider = nullptr;
+}
+
 
 // Get variable
 // #####

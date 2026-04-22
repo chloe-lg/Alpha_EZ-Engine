@@ -84,7 +84,7 @@ void GameEngine::render() {
 void GameEngine::run() {
 
     Textures::getTexturesManager()->loadAllTexture();
-    activeStates.push_back(Menu::getInstance());
+    activeStates.push_back(Menu::getInstance(MenuType::MainMenu));
 
     while (window->isOpen()) {
         updateEvent();

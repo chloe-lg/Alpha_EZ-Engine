@@ -13,10 +13,18 @@ public:
         plate_b,
         plate_r,
         knife,
-        red_knife,
-        soy_sause_1,
-        soy_sause_2,
-        chopstikes
+        soy_sauce_1,
+        soy_sauce_2,
+        bg_menu,
+        bg_game,
+
+        title,
+        btn_start,
+        btn_resume,
+        btn_quit,
+        btn_restart,
+        img_gameover,
+        img_win,
     };
 
     enum class fontsIndices {

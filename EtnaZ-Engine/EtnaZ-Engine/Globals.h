@@ -1,7 +1,10 @@
 #pragma once
+extern float WIN_WIDTH;
+extern float WIN_HEIGHT;
 
-const int WINWIDTH = 1920;
-const int WINHEIGHT = 1080;
+extern float LEVEL_WIDTH;
+extern float LEVEL_HEIGHT;
 
-const int LEVELWIDTH = 1920 * 2;
-const int LEVELHEIGHT = 1080 * 2;
+extern float PLAYABLE_WIDTH;
+extern float PLAYABLE_HEIGHT;
+extern float PLAYABLE_X;

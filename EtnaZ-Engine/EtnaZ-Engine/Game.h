@@ -2,12 +2,12 @@
 #include "GameState.h"
 #include "GameObject.h"
 #include "Player.h"
-#include "Knife.h"
-#include "Plate.h"
 #include "Globals.h"
-#pragma once
+#include "Camera.h"
+#include "SFML/Graphics.hpp"
 #include <iostream>
-
+ 
+class LoadLevel;
 
 class GameEngine;
 
@@ -27,15 +27,24 @@ private:
 
     // Vec for render
     std::vector<std::vector<GameObject*>> vecRender;
+    sf::RectangleShape bgGame;
 
-    Player* myPlayer;
-    Knife* myKnife;
-    Plate* myPlate;
+    Player* myPlayer = nullptr;
+	LoadLevel* myLevel = nullptr;
+    Camera* myCamera = nullptr;
+
 
 public:
     virtual ~Game() override;
 
     static GameState* getInstance();
+
+    static void resetInstance();
+
+    void setEntity();
+
+    void gameOver();
+    void win();
 
     virtual void manageState() override;
     virtual void update(float& dt) override;
@@ -48,4 +57,5 @@ public:
     // Layer
     void addObjetcInLayer(GameObject* myObject, int Layer);
     void setLayer(int nbrLayer);
+
 };

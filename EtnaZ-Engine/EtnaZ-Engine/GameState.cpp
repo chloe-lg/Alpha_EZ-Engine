@@ -23,9 +23,10 @@ void GameState::pause() {
 // Function for resume a scene
 // ######
 void GameState::resume() {
-    if (!GameEngine::activeStates.empty()) {
+    if (!GameEngine::activeStates.empty() && !GameEngine::states.empty()) {
         GameEngine::activeStates.pop_back();
         GameEngine::activeStates.push_back(GameEngine::states.back());
+        GameEngine::states.pop_back();
     }
 }
 // ######

@@ -4,22 +4,23 @@
 #include "GameObject.h"
 
 class Camera {
+public:
+    GameObject* target;
+
 private:
-    sf::View myView;
-    sf::Vector2f pos;
-    sf::Vector2f center;
-    sf::Vector2f targetPos;
-    float lag;
+    sf::View view;
+    float cameraY;
+    float scrollSpeed;
+
 
 public:
     Camera() = default;
-    Camera(float lag);
+    Camera(float scrollSpeed);
     ~Camera() = default;
 
-    void updateCamera(GameObject* myObject);
+    void update(float dt);
+    bool isCaught(GameObject* myObject);
 
-    void setCamera(sf::RenderWindow* window);
-    void camHUD(sf::RenderWindow* window);
+    sf::View& getView();
 
-    void getCameraPos(sf::Vector2f& _pos) const;
 };

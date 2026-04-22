@@ -133,6 +133,7 @@
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Collider.cpp" />
+    <ClCompile Include="Finish.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameEngine.cpp" />
     <ClCompile Include="GameObject.cpp" />
@@ -140,11 +141,12 @@
     <ClCompile Include="Globals.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="Knife.cpp" />
-    <ClCompile Include="LevelEditor.cpp" />
+    <ClCompile Include="LoadLevel.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="Plate.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Soy.cpp" />
     <ClCompile Include="StateMachine.cpp" />
     <ClCompile Include="Textures.cpp" />
     <ClCompile Include="TXAnimated.cpp" />
@@ -152,6 +154,7 @@
   <ItemGroup>
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Collider.h" />
+    <ClInclude Include="Finish.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameEngine.h" />
     <ClInclude Include="GameObject.h" />
@@ -159,10 +162,11 @@
     <ClInclude Include="Globals.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="Knife.h" />
-    <ClInclude Include="LevelEditor.h" />
+    <ClInclude Include="LoadLevel.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="Plate.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="Soy.h" />
     <ClInclude Include="StateMachine.h" />
     <ClInclude Include="Textures.h" />
     <ClInclude Include="TXAnimated.h" />
